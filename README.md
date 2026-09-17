@@ -71,15 +71,18 @@ Cliente HTTP → Controller → Service → DbContext → PostgreSQL
 
 ## Como rodar o projeto
 
-### Pré-requisitos
+Existem **duas formas** de rodar o projeto:
 
-Antes de começar, certifique-se de ter instalado:
+- **Com Docker** (recomendado) — mais simples, só precisa do Docker instalado.
+- **Localmente** — precisa do .NET SDK e do PostgreSQL.
 
-- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+### Opção 1: Com Docker (recomendado)
+
+**Pré-requisitos:**
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [Git](https://git-scm.com/downloads)
 
-### Passo a passo
+**Passo a passo:**
 
 **1. Clone o repositório:**
 
@@ -88,19 +91,61 @@ git clone https://github.com/BotterPedro/TodoApi.git
 cd TodoApi
 ```
 
-**2. Suba o banco de dados PostgreSQL via Docker:**
+**2. Suba os containers:**
 
 ```bash
-docker compose up -d
+docker compose up --build
 ```
 
-Confirme que o container está rodando:
+Esse comando vai:
+
+- Construir a imagem da API a partir do `Dockerfile`.
+- Subir o PostgreSQL.
+- Subir a API.
+- Aplicar as migrations automaticamente.
+
+**3. Acesse o Swagger:**
+
+Abra o navegador em:
+
+```
+http://localhost:8080/swagger
+```
+
+**4. Para parar os containers:**
 
 ```bash
-docker ps
+docker compose down
 ```
 
-Você deve ver o container `todoapi-postgres` com status `Up`.
+**Para apagar também os dados do banco:**
+
+```bash
+docker compose down -v
+```
+
+### Opção 2: Localmente
+
+**Pré-requisitos:**
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (apenas para o PostgreSQL)
+- [Git](https://git-scm.com/downloads)
+
+**Passo a passo:**
+
+**1. Clone o repositório:**
+
+```bash
+git clone https://github.com/BotterPedro/TodoApi.git
+cd TodoApi
+```
+
+**2. Suba apenas o PostgreSQL via Docker:**
+
+```bash
+docker compose up postgres -d
+```
 
 **3. Instale as ferramentas do Entity Framework Core (uma vez só):**
 
@@ -108,7 +153,7 @@ Você deve ver o container `todoapi-postgres` com status `Up`.
 dotnet tool install --global dotnet-ef
 ```
 
-**4. Aplique as migrations para criar as tabelas:**
+**4. Aplique as migrations:**
 
 ```bash
 dotnet ef database update -p src/TodoApi.Infrastructure -s src/TodoApi.Api
@@ -122,16 +167,11 @@ dotnet run --project src/TodoApi.Api
 
 **6. Acesse o Swagger:**
 
-Abra o navegador em:
+A porta exata aparece no terminal quando a API inicia (algo como `https://localhost:7123`). Abra:
 
 ```
 https://localhost:<porta>/swagger
 ```
-
-> A porta exata aparece no terminal quando a API inicia (algo como `https://localhost:7123`).
-
----
-
 ## Endpoints da API
 
 | Método | Rota | Descrição |
@@ -274,7 +314,7 @@ Algumas decisões importantes tomadas durante o desenvolvimento:
 - [x] Swagger com documentação
 - [x] Testes unitários (Domain + Application)
 - [x] Testes de integração (HTTP)
-- [ ] Containerizar a própria API
+- [x] Containerizar a própria API
 - [ ] Autenticação JWT com Identity
 - [ ] Serilog para logs estruturados
 - [ ] CI/CD com GitHub Actions

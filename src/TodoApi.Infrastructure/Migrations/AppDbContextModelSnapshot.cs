@@ -24,9 +24,9 @@ namespace TodoApi.Infrastructure.Migrations
 
             modelBuilder.Entity("TodoApi.Domain.Entities.Tarefa", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Concluida")
                         .HasColumnType("boolean");

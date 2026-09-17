@@ -15,7 +15,7 @@ namespace TodoApi.Infrastructure.Migrations
                 name: "Tarefas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Titulo = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Descricao = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
                     Concluida = table.Column<bool>(type: "boolean", nullable: false),

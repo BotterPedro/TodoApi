@@ -12,7 +12,7 @@ using TodoApi.Infrastructure.Data;
 namespace TodoApi.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260910202916_InitialCreate")]
+    [Migration("20260917182739_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,9 +27,9 @@ namespace TodoApi.Infrastructure.Migrations
 
             modelBuilder.Entity("TodoApi.Domain.Entities.Tarefa", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Concluida")
                         .HasColumnType("boolean");
