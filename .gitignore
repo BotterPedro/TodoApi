@@ -40,3 +40,6 @@ desktop.ini
 .env
 .env.local
 appsettings.Local.json
+
+logs/
+*.log
