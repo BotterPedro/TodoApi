@@ -1,5 +1,7 @@
 # TodoApi
 
+[![CI](https://github.com/BotterPedro/TodoApi/actions/workflows/ci.yml/badge.svg)](https://github.com/BotterPedro/TodoApi/actions/workflows/ci.yml)
+
 API REST para gerenciamento de tarefas, construída com **.NET 10**, **Entity Framework Core**, **PostgreSQL** e **Docker**. Projeto de portfólio com arquitetura em camadas, testes automatizados e boas práticas de mercado.
 
 ---
