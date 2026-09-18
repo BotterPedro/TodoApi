@@ -172,6 +172,71 @@ A porta exata aparece no terminal quando a API inicia (algo como `https://localh
 ```
 https://localhost:<porta>/swagger
 ```
+## Autenticação
+
+A API usa **JWT (JSON Web Token)** para autenticação. Toda requisição aos endpoints de tarefas precisa enviar um token válido no cabeçalho `Authorization`.
+
+### Fluxo básico
+
+**1. Registre um usuário:**
+
+```http
+POST /api/auth/registrar
+Content-Type: application/json
+
+{
+  "nome": "Seu Nome",
+  "email": "seu@email.com",
+  "senha": "senha123"
+}
+```
+
+**Resposta:**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "nome": "Seu Nome",
+  "email": "seu@email.com",
+  "expiraEm": "2026-09-18T23:00:00Z"
+}
+```
+
+**2. Faça login (se já tiver conta):**
+
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "seu@email.com",
+  "senha": "senha123"
+}
+```
+
+**3. Use o token nas requisições seguintes:**
+
+```http
+GET /api/tarefas
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+### Regras
+
+- A senha é armazenada com **hash BCrypt** (nunca em texto puro).
+- O token expira em **8 horas** (configurável).
+- Cada usuário só vê e gerencia **as próprias tarefas**.
+- Requisições sem token ou com token inválido retornam **401 Unauthorized**.
+
+### Endpoints de autenticação
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `POST` | `/api/auth/registrar` | Cria um usuário novo e retorna o token |
+| `POST` | `/api/auth/login` | Autentica e retorna o token |
+
+---
+
 ## Endpoints da API
 
 | Método | Rota | Descrição |
