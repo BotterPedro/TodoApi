@@ -39,7 +39,16 @@ builder.Services.AddCors(options =>
                 if (!Uri.TryCreate(origin, UriKind.Absolute, out var uri))
                     return false;
 
-                return uri.Host == "localhost" || uri.Host == "127.0.0.1";
+                if (uri.Host == "localhost" || uri.Host == "127.0.0.1")
+                    return true;
+
+                if (uri.Host.EndsWith(".pages.dev"))
+                    return true;
+
+                if (uri.Host.EndsWith(".github.io"))
+                    return true;
+
+                return false;
             })
             .AllowAnyHeader()
             .AllowAnyMethod()
