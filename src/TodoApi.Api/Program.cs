@@ -119,7 +119,7 @@ app.UseExceptionHandler(errorApp =>
     });
 });
 
-if (app.Environment.IsDevelopment())
+if (!isTesting)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
