@@ -29,6 +29,38 @@ builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:5000",
+                "https://localhost:5001",
+                "http://localhost:5002",
+                "https://localhost:5002",
+                "http://localhost:5100",
+                "https://localhost:5100",
+                "http://localhost:5200",
+                "https://localhost:5200",
+                "http://localhost:5300",
+                "https://localhost:5300",
+                "http://localhost:7000",
+                "https://localhost:7000",
+                "http://localhost:7100",
+                "https://localhost:7100",
+                "http://localhost:7200",
+                "https://localhost:7200",
+                "http://localhost:7300",
+                "https://localhost:7300",
+                "https://localhost:5096"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 var isTesting = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Testing";
 
 if (!isTesting)
@@ -126,6 +158,8 @@ if (!isTesting)
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
