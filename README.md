@@ -479,7 +479,7 @@ Algumas decisões importantes tomadas durante o desenvolvimento:
 - [x] Serilog para logs estruturados
 - [x] CI/CD com GitHub Actions
 - [x] Deploy público (Render + Neon)
-- [ ] Front-end Blazor WebAssembly consumindo a API
+- [x] Front-end Blazor WebAssembly consumindo a API
 
 ---
 
